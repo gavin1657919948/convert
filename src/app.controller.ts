@@ -21,10 +21,11 @@ export class AppController {
   @Post('convert')
   @UseInterceptors(FileInterceptor('file'))
   async fileStream(@UploadedFile() file: any, @Res() res) {
-    const fileNewName = `${Date.now()}-${file.originalname}`;
+    const fileName = `${Date.now()}-${file.originalname}`;
+    const fileNewName = fileName.substring(fileName.lastIndexOf('.'), -1) + '.pdf';
     libConverter.convert(file.buffer, '.pdf', undefined, (err, done) => {
-      if(err){
-        console.log("convert:err:",err);
+      if (err) {
+        console.log("convert:err:", err);
         res.end('error')
       }
       res.set('Content-Disposition', contentDisposition(fileNewName));
