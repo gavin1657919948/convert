@@ -8,7 +8,12 @@ COPY /fonts /usr/share/fonts/winfonts
 RUN cd /usr/share/fonts/winfonts && \
 mkfontscale && \
 mkfontdir && \
-fc-cache -fv
+fc-cache -fv && \
+yum install epel-release -y && \
+yum update -y && \
+rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro && \
+rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm && \
+yum install ffmpeg ffmpeg-devel -y
 
 ADD node-v10.17.0-linux-x64.tar.xz    /usr/local
 RUN mv /usr/local/node-v10.17.0-linux-x64  /usr/local/node
